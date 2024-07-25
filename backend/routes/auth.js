@@ -14,7 +14,7 @@ router.get("/login", async (req, res) => {
     if (!decodeValue) {
       return res.status(500).json({ message: "Un Authorize" });
     }
-
+    // checking user email already exists or not
     const userExists = await user.findOne({ user_id: decodeValue.user_id });
     if (!userExists) {
       newUserData(decodeValue, req, res);
@@ -44,9 +44,10 @@ router.put("/favourites/:userId", async (req, res) => {
 
 router.get("/getUsers", async (req, res) => {
   const options = {
-   
+    // sort returned documents in ascending order
     sort: { createdAt: 1 },
-   
+    // Include only the following
+    // projection : {}
   };
 
   const cursor = await user.find(options);
